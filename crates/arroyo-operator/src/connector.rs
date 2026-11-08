@@ -29,6 +29,7 @@ pub struct Connection {
     pub config: String,
     pub description: String,
     pub partition_exprs: Option<Vec<Expr>>,
+    pub updating: bool,
 }
 
 impl Connection {
@@ -50,11 +51,19 @@ impl Connection {
             config: serde_json::to_string(config).unwrap(),
             description,
             partition_exprs: None,
+            updating: false,
         }
     }
 
     pub fn with_partition_exprs(mut self, partition_fields: Option<Vec<Expr>>) -> Self {
         self.partition_exprs = partition_fields;
+        self
+    }
+
+    /// Marks the table as updating whatever its format: as a source, the connector emits rows as `before`, `after` and
+    /// `op`, as Debezium does; as a sink, it takes them
+    pub fn with_updating(mut self, updating: bool) -> Self {
+        self.updating = updating;
         self
     }
 }

@@ -83,6 +83,7 @@ pub struct ConnectorTable {
     pub primary_keys: Arc<Vec<String>>,
     pub inferred_fields: Option<Vec<FieldRef>>,
     pub partition_exprs: Arc<Option<Vec<Expr>>>,
+    pub updating: bool,
 
     // for lookup tables
     pub lookup_cache_max_bytes: Option<u64>,
@@ -101,7 +102,8 @@ multifield_partial_ord!(
     event_time_field,
     watermark_field,
     idle_time,
-    primary_keys
+    primary_keys,
+    updating
 );
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -234,6 +236,7 @@ impl From<Connection> for ConnectorTable {
             idle_time: DEFAULT_IDLE_TIME,
             primary_keys: Arc::new(vec![]),
             partition_exprs: Arc::new(value.partition_exprs),
+            updating: value.updating,
             inferred_fields: None,
             lookup_cache_max_bytes: None,
             lookup_cache_ttl: None,
@@ -466,11 +469,9 @@ impl ConnectorTable {
         self.fields.iter().any(|f| f.is_virtual())
     }
 
+    /// Whether the table is updating: by its format, as Debezium JSON is, or because its connector says so
     pub(crate) fn is_updating(&self) -> bool {
-        self.format
-            .as_ref()
-            .map(|f| f.is_updating())
-            .unwrap_or(false)
+        self.updating || self.format.as_ref().is_some_and(|f| f.is_updating())
     }
 
     fn timestamp_override(&self) -> Result<Option<Expr>> {
