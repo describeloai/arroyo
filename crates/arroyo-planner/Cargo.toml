@@ -43,6 +43,7 @@ itertools = { workspace = true }
 sqlparser = { workspace = true}
 
 [dev-dependencies]
+metalake-arroyo = { git = "https://github.com/metalakeorg/metalake", rev = "711bb80dad69e3c171e67d83f9d809aec1aa3cd2" }
 test-log = {version = "0.2.15", default-features = false, features = ["trace"]}
 rstest = { version = "0.25" }
 

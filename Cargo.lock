@@ -854,6 +854,7 @@ dependencies = [
  "futures",
  "glob",
  "itertools 0.14.0",
+ "metalake-arroyo",
  "petgraph",
  "prost 0.14.4",
  "rstest",

@@ -1,3 +1,4 @@
+mod metalake;
 mod plan_tests;
 
 use arrow_schema::DataType;
