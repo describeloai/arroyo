@@ -89,6 +89,9 @@ fluvio = { version = "0.24", features = ["openssl"] }
 aws-sdk-kinesis = { version = "1.95" }
 aws-config = { workspace = true }
 
+# MetaLake
+metalake-arroyo = { git = "https://github.com/metalakeorg/metalake", rev = "e382bb7676d0397d05be5604ac33cb35a50c63ea" }
+
 # Filesystem
 parquet = { workspace = true, features = ["async"] }
 object_store = { workspace = true }

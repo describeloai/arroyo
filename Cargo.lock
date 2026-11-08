@@ -634,6 +634,7 @@ dependencies = [
  "iceberg-catalog-rest",
  "iceberg-storage-opendal",
  "itertools 0.14.0",
+ "metalake-arroyo",
  "murmur3",
  "nkeys 0.3.2",
  "num-bigint",
@@ -6960,6 +6961,62 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "488016bfae457b036d996092f6cb448677611ce4449e970ceaf42695203f218a"
 dependencies = [
  "autocfg",
+]
+
+[[package]]
+name = "metalake"
+version = "0.0.0"
+source = "git+https://github.com/metalakeorg/metalake?rev=e382bb7676d0397d05be5604ac33cb35a50c63ea#e382bb7676d0397d05be5604ac33cb35a50c63ea"
+dependencies = [
+ "arrow-array",
+ "arrow-schema",
+ "arrow-select",
+ "bytes",
+ "crc32fast",
+ "futures-util",
+ "metalake-pg",
+ "object_store",
+ "parquet",
+ "roaring",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.20",
+ "tokio",
+ "url",
+ "uuid",
+]
+
+[[package]]
+name = "metalake-arroyo"
+version = "0.0.0"
+source = "git+https://github.com/metalakeorg/metalake?rev=e382bb7676d0397d05be5604ac33cb35a50c63ea#e382bb7676d0397d05be5604ac33cb35a50c63ea"
+dependencies = [
+ "anyhow",
+ "arrow-schema",
+ "arroyo-operator",
+ "arroyo-rpc",
+ "chrono",
+ "datafusion",
+ "metalake",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "tokio",
+]
+
+[[package]]
+name = "metalake-pg"
+version = "0.0.0"
+source = "git+https://github.com/metalakeorg/metalake?rev=e382bb7676d0397d05be5604ac33cb35a50c63ea#e382bb7676d0397d05be5604ac33cb35a50c63ea"
+dependencies = [
+ "deadpool-postgres",
+ "futures-util",
+ "postgres-types",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.20",
+ "tokio-postgres",
+ "uuid",
 ]
 
 [[package]]
