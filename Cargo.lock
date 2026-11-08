@@ -6966,7 +6966,7 @@ dependencies = [
 [[package]]
 name = "metalake"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=e382bb7676d0397d05be5604ac33cb35a50c63ea#e382bb7676d0397d05be5604ac33cb35a50c63ea"
+source = "git+https://github.com/metalakeorg/metalake?rev=711bb80dad69e3c171e67d83f9d809aec1aa3cd2#711bb80dad69e3c171e67d83f9d809aec1aa3cd2"
 dependencies = [
  "arrow-array",
  "arrow-schema",
@@ -6989,25 +6989,35 @@ dependencies = [
 [[package]]
 name = "metalake-arroyo"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=e382bb7676d0397d05be5604ac33cb35a50c63ea#e382bb7676d0397d05be5604ac33cb35a50c63ea"
+source = "git+https://github.com/metalakeorg/metalake?rev=711bb80dad69e3c171e67d83f9d809aec1aa3cd2#711bb80dad69e3c171e67d83f9d809aec1aa3cd2"
 dependencies = [
  "anyhow",
+ "arrow-array",
+ "arrow-buffer",
+ "arrow-cast",
  "arrow-schema",
  "arroyo-operator",
  "arroyo-rpc",
+ "arroyo-state",
+ "arroyo-types",
+ "async-trait",
  "chrono",
  "datafusion",
+ "futures",
  "metalake",
+ "metalake-pg",
  "schemars 1.0.4",
  "serde",
  "serde_json",
+ "thiserror 2.0.20",
  "tokio",
+ "tracing",
 ]
 
 [[package]]
 name = "metalake-pg"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=e382bb7676d0397d05be5604ac33cb35a50c63ea#e382bb7676d0397d05be5604ac33cb35a50c63ea"
+source = "git+https://github.com/metalakeorg/metalake?rev=711bb80dad69e3c171e67d83f9d809aec1aa3cd2#711bb80dad69e3c171e67d83f9d809aec1aa3cd2"
 dependencies = [
  "deadpool-postgres",
  "futures-util",

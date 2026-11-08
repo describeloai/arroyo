@@ -121,6 +121,8 @@ split-debuginfo = "unpacked"
 [patch."https://github.com/describeloai/arroyo"]
 arroyo-operator = { path = "crates/arroyo-operator" }
 arroyo-rpc = { path = "crates/arroyo-rpc" }
+arroyo-state = { path = "crates/arroyo-state" }
+arroyo-types = { path = "crates/arroyo-types" }
 
 [patch.crates-io]
 typify = { git = 'https://github.com/ArroyoSystems/typify.git', branch = 'arroyo' }
