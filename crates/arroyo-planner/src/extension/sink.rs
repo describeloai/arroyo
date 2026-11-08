@@ -65,7 +65,7 @@ impl SinkExtension {
                     }
                     (true, false) => {
                         return plan_err!(
-                            "input is updating, but sink is not configured as an updating sink (hint: use `format = 'debezium_json'`)"
+                            "input is updating, but sink is not configured as an updating sink (hint: use `format = 'debezium_json'`, or a connector whose sink takes updates)"
                         );
                     }
                     (false, false) => {}
