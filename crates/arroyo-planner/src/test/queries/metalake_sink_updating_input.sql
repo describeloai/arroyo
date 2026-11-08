@@ -1,4 +1,3 @@
---fail=input is updating, but sink is not configured as an updating sink
 CREATE TABLE changes (
     k BIGINT
 ) WITH (

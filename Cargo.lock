@@ -6967,7 +6967,7 @@ dependencies = [
 [[package]]
 name = "metalake"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8#2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8"
+source = "git+https://github.com/metalakeorg/metalake?rev=67c66ce0d0b77b8e582e5e11340ba86c125e275c#67c66ce0d0b77b8e582e5e11340ba86c125e275c"
 dependencies = [
  "arrow-array",
  "arrow-schema",
@@ -6990,13 +6990,14 @@ dependencies = [
 [[package]]
 name = "metalake-arroyo"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8#2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8"
+source = "git+https://github.com/metalakeorg/metalake?rev=67c66ce0d0b77b8e582e5e11340ba86c125e275c#67c66ce0d0b77b8e582e5e11340ba86c125e275c"
 dependencies = [
  "anyhow",
  "arrow-array",
  "arrow-buffer",
  "arrow-cast",
  "arrow-schema",
+ "arrow-select",
  "arroyo-operator",
  "arroyo-rpc",
  "arroyo-state",
@@ -7019,7 +7020,7 @@ dependencies = [
 [[package]]
 name = "metalake-pg"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8#2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8"
+source = "git+https://github.com/metalakeorg/metalake?rev=67c66ce0d0b77b8e582e5e11340ba86c125e275c#67c66ce0d0b77b8e582e5e11340ba86c125e275c"
 dependencies = [
  "deadpool-postgres",
  "futures-util",
