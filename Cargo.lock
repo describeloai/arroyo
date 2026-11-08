@@ -634,6 +634,7 @@ dependencies = [
  "iceberg-catalog-rest",
  "iceberg-storage-opendal",
  "itertools 0.14.0",
+ "metalake-arroyo",
  "murmur3",
  "nkeys 0.3.2",
  "num-bigint",
@@ -853,6 +854,7 @@ dependencies = [
  "futures",
  "glob",
  "itertools 0.14.0",
+ "metalake-arroyo",
  "petgraph",
  "prost 0.14.4",
  "rstest",
@@ -6960,6 +6962,77 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "488016bfae457b036d996092f6cb448677611ce4449e970ceaf42695203f218a"
 dependencies = [
  "autocfg",
+]
+
+[[package]]
+name = "metalake"
+version = "0.0.0"
+source = "git+https://github.com/metalakeorg/metalake?rev=7d389dbe3aa01b2c8c27c710b2fa84cc71d2f872#7d389dbe3aa01b2c8c27c710b2fa84cc71d2f872"
+dependencies = [
+ "arrow-array",
+ "arrow-schema",
+ "arrow-select",
+ "bytes",
+ "crc32fast",
+ "futures-util",
+ "metalake-pg",
+ "object_store",
+ "parquet",
+ "roaring",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.20",
+ "tokio",
+ "url",
+ "uuid",
+]
+
+[[package]]
+name = "metalake-arroyo"
+version = "0.0.0"
+source = "git+https://github.com/metalakeorg/metalake?rev=7d389dbe3aa01b2c8c27c710b2fa84cc71d2f872#7d389dbe3aa01b2c8c27c710b2fa84cc71d2f872"
+dependencies = [
+ "anyhow",
+ "arrow-array",
+ "arrow-buffer",
+ "arrow-cast",
+ "arrow-ipc",
+ "arrow-row",
+ "arrow-schema",
+ "arrow-select",
+ "arroyo-operator",
+ "arroyo-rpc",
+ "arroyo-state",
+ "arroyo-types",
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "datafusion",
+ "futures",
+ "metalake",
+ "metalake-pg",
+ "prost 0.14.4",
+ "schemars 1.0.4",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.20",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "metalake-pg"
+version = "0.0.0"
+source = "git+https://github.com/metalakeorg/metalake?rev=7d389dbe3aa01b2c8c27c710b2fa84cc71d2f872#7d389dbe3aa01b2c8c27c710b2fa84cc71d2f872"
+dependencies = [
+ "deadpool-postgres",
+ "futures-util",
+ "postgres-types",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.20",
+ "tokio-postgres",
+ "uuid",
 ]
 
 [[package]]

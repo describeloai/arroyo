@@ -1,3 +1,4 @@
+mod metalake;
 mod plan_tests;
 
 use arrow_schema::DataType;
@@ -6,10 +7,14 @@ use arroyo_connectors::{
     nexmark::{NexmarkConnector, NexmarkTable},
 };
 use arroyo_datastream::logical::LogicalEdgeType;
-use arroyo_operator::connector::Connector;
+use arroyo_operator::connector::{Connection, Connector};
+use arroyo_rpc::api_types::connections::{
+    ConnectionSchema, ConnectionType, FieldType, SourceField,
+};
 use arroyo_udf_host::parse::NullableType;
 use test_log::test;
 
+use crate::tables::ConnectorTable;
 use crate::{ArroyoSchemaProvider, SqlConfig, parse_and_get_program};
 
 fn get_test_schema_provider() -> ArroyoSchemaProvider {
@@ -138,4 +143,63 @@ async fn test_filesystem_partition_shuffle_routes_on_partition_key() {
     "#;
 
     assert_eq!(shuffle_routing_keys(sql).await, vec![vec!["__key_0"]]);
+}
+
+/// A source whose connector says it's updating, with no Debezium format and no primary key
+fn updating_source(name: &str) -> Connection {
+    let field = |name: &str, field_type| SourceField {
+        name: name.to_string(),
+        field_type,
+        required: true,
+        sql_name: None,
+        metadata_key: None,
+    };
+    let schema = ConnectionSchema::try_new(
+        None,
+        None,
+        None,
+        vec![
+            field("id", FieldType::Int64),
+            field("amount", FieldType::Float64),
+        ],
+        None,
+        Some(false),
+        Default::default(),
+    )
+    .unwrap();
+
+    Connection::new(
+        None,
+        "changes",
+        name.to_string(),
+        ConnectionType::Source,
+        schema,
+        &EmptyConfig {},
+        name.to_string(),
+    )
+    .with_updating(true)
+}
+
+#[test(tokio::test)]
+async fn test_connector_declares_updating() {
+    let table: ConnectorTable = updating_source("changes").into();
+    assert!(table.is_updating());
+
+    let mut schema_provider = get_test_schema_provider();
+    schema_provider.add_connector_table(updating_source("changes"));
+    schema_provider.add_connector_table(updating_source("other"));
+
+    // the planner unrolls its rows into an updating aggregate, as it does for Debezium
+    let sql = "SELECT id, count(*), sum(amount) FROM changes GROUP BY id";
+    parse_and_get_program(sql, schema_provider.clone(), SqlConfig::default())
+        .await
+        .unwrap();
+
+    // and refuses it where updating input isn't supported
+    let sql = "SELECT * FROM changes JOIN other ON changes.id = other.id";
+    let err = parse_and_get_program(sql, schema_provider, SqlConfig::default())
+        .await
+        .unwrap_err();
+    let message = &err.diagnostics.first().unwrap().message;
+    assert!(message.contains("updating left side of join"), "{message}");
 }
