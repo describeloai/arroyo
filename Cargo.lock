@@ -6967,7 +6967,7 @@ dependencies = [
 [[package]]
 name = "metalake"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=711bb80dad69e3c171e67d83f9d809aec1aa3cd2#711bb80dad69e3c171e67d83f9d809aec1aa3cd2"
+source = "git+https://github.com/metalakeorg/metalake?rev=2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8#2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8"
 dependencies = [
  "arrow-array",
  "arrow-schema",
@@ -6990,7 +6990,7 @@ dependencies = [
 [[package]]
 name = "metalake-arroyo"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=711bb80dad69e3c171e67d83f9d809aec1aa3cd2#711bb80dad69e3c171e67d83f9d809aec1aa3cd2"
+source = "git+https://github.com/metalakeorg/metalake?rev=2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8#2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8"
 dependencies = [
  "anyhow",
  "arrow-array",
@@ -7007,6 +7007,7 @@ dependencies = [
  "futures",
  "metalake",
  "metalake-pg",
+ "prost 0.14.4",
  "schemars 1.0.4",
  "serde",
  "serde_json",
@@ -7018,7 +7019,7 @@ dependencies = [
 [[package]]
 name = "metalake-pg"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=711bb80dad69e3c171e67d83f9d809aec1aa3cd2#711bb80dad69e3c171e67d83f9d809aec1aa3cd2"
+source = "git+https://github.com/metalakeorg/metalake?rev=2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8#2fdb42c072e8b29573b9ddf6ea09c5bc9d56dcb8"
 dependencies = [
  "deadpool-postgres",
  "futures-util",
