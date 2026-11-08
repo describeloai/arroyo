@@ -35,7 +35,7 @@ fn core_rows(keys: &[i64], changes: &[&str], seqs: &[i64]) -> RecordBatch {
 }
 
 #[tokio::test]
-async fn metalake_rows_unroll() {
+async fn test_metalake_rows_unroll() {
     let row = DataType::Struct(vec![Field::new("k", DataType::Int64, true)].into());
     let schema = Arc::new(Schema::new(vec![
         Field::new("before", row.clone(), true),
