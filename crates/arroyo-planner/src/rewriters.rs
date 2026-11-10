@@ -290,10 +290,11 @@ impl TreeNodeRewriter for SourceRewriter<'_> {
             return Ok(Transformed::no(node));
         };
 
-        let table_name = table_scan.table_name.table();
+        // By the name the statement gives, as the planner found it (`get_table_source`): a qualified one included.
+        let table_name = table_scan.table_name.to_string();
         let table = self
             .schema_provider
-            .get_table(table_name)
+            .get_table(table_name.as_str())
             .ok_or_else(|| DataFusionError::Plan(format!("Table {table_name} not found")))?;
 
         match table {

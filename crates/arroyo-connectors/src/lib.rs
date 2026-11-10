@@ -26,6 +26,9 @@ pub mod kinesis;
 pub mod mqtt;
 pub mod nats;
 pub mod nexmark;
+
+/// MetaLake tables found by name in its catalog, for a query that names them with no `WITH`.
+pub use metalake_arroyo::resolve as metalake;
 pub mod polling_http;
 pub mod preview;
 pub mod rabbitmq;

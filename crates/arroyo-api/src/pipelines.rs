@@ -182,6 +182,18 @@ async fn compile_sql(
         schema_provider.add_connection_profile(profile);
     }
 
+    // MetaLake's tables named in the query, from the catalog its environment names: a query reads and writes them by
+    // name, with no `CREATE TABLE … WITH`. Without METALAKE_POSTGRES, nothing changes.
+    if let Some(env) = arroyo_connectors::metalake::Environment::from_env() {
+        let known = |name: &str| schema_provider.get_table(name).is_some();
+        let tables = arroyo_connectors::metalake::resolve(&query, known, &env)
+            .await
+            .map_err(|e| bad_request(e.to_string()))?;
+        for table in tables {
+            schema_provider.add_connector_table(table);
+        }
+    }
+
     Ok(arroyo_planner::parse_and_get_program(
         &query,
         schema_provider,
