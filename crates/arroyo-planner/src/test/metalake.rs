@@ -90,3 +90,72 @@ async fn test_metalake_rows_unroll() {
     assert_eq!(times.value(0), (1_700_000_000_000_000 + 5) * 1_000);
     assert!(!batch.column_by_name("k").unwrap().is_null(1));
 }
+
+/// A query that names MetaLake tables with no `WITH`, planned once `resolve` has found them in a catalog, as the API
+/// does before it plans. It needs a Postgres at `DATABASE_URL`, as MetaLake's own tests do: without one there is no
+/// catalog to find them in, and the test has nothing to check.
+#[tokio::test]
+async fn test_metalake_names_resolved() {
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    use metalake::{Catalog, CatalogConfig, NewTable};
+    use metalake_arroyo::resolve::{Environment, resolve};
+
+    use crate::{ArroyoSchemaProvider, SqlConfig, parse_and_get_program};
+
+    let Ok(url) = std::env::var("DATABASE_URL") else {
+        return;
+    };
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_nanos();
+    let schema = format!("arroyo_names_{nanos}");
+    let warehouse = format!("file://{}", std::env::temp_dir().join(&schema).display());
+    let config = CatalogConfig::new(url.clone(), &schema).warehouse(&warehouse);
+    let catalog = Catalog::init(config, None).await.unwrap();
+    let main = catalog.branch("main").await.unwrap();
+    main.transaction()
+        .create_namespace(&["shop"])
+        .commit()
+        .await
+        .unwrap();
+    for (name, columns) in [("orders", vec!["k"]), ("totals", vec!["k", "orders"])] {
+        let fields: Vec<Field> = columns
+            .iter()
+            .map(|c| Field::new(*c, DataType::Int64, true))
+            .collect();
+        let (tx, _) = main
+            .transaction()
+            .create_table(NewTable {
+                namespace: &["shop"],
+                name,
+                schema: &Schema::new(fields),
+                location: None,
+                cluster_key: vec![],
+                partitioning: vec![],
+                properties: vec![],
+            })
+            .unwrap();
+        tx.commit().await.unwrap();
+    }
+    catalog.close();
+
+    let env = Environment {
+        postgres: url,
+        schema,
+        storage: vec![],
+    };
+    let query = "INSERT INTO shop.totals SELECT k, count(*) AS orders FROM shop.orders GROUP BY k";
+    let mut provider = ArroyoSchemaProvider::new();
+    let tables = resolve(query, |name| provider.get_table(name).is_some(), &env)
+        .await
+        .unwrap();
+    assert_eq!(tables.len(), 2);
+    for table in tables {
+        provider.add_connector_table(table);
+    }
+    parse_and_get_program(query, provider, SqlConfig::default())
+        .await
+        .unwrap();
+}
