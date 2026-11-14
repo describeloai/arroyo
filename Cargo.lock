@@ -949,7 +949,7 @@ dependencies = [
  "serde_json",
  "tokio",
  "tokio-postgres",
- "tokio-postgres-rustls",
+ "tokio-postgres-rustls 0.13.0",
  "tokio-util",
  "toml",
  "tonic",
@@ -6968,20 +6968,25 @@ dependencies = [
 [[package]]
 name = "metalake"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=de416ed17b364afec61e1e4f8422e7391372a341#de416ed17b364afec61e1e4f8422e7391372a341"
+source = "git+https://github.com/metalakeorg/metalake?rev=7ad9ea8e99453fe8f0848405475c7e4720778911#7ad9ea8e99453fe8f0848405475c7e4720778911"
 dependencies = [
  "arrow-array",
  "arrow-schema",
  "arrow-select",
+ "base64 0.22.1",
  "bytes",
  "crc32fast",
  "futures-util",
+ "hmac",
  "metalake-pg",
  "object_store",
  "parquet",
+ "reqwest 0.12.19",
+ "ring",
  "roaring",
  "serde",
  "serde_json",
+ "sha2 0.11.0",
  "thiserror 2.0.20",
  "tokio",
  "url",
@@ -6991,7 +6996,7 @@ dependencies = [
 [[package]]
 name = "metalake-arroyo"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=de416ed17b364afec61e1e4f8422e7391372a341#de416ed17b364afec61e1e4f8422e7391372a341"
+source = "git+https://github.com/metalakeorg/metalake?rev=7ad9ea8e99453fe8f0848405475c7e4720778911#7ad9ea8e99453fe8f0848405475c7e4720778911"
 dependencies = [
  "anyhow",
  "arrow-array",
@@ -7024,15 +7029,19 @@ dependencies = [
 [[package]]
 name = "metalake-pg"
 version = "0.0.0"
-source = "git+https://github.com/metalakeorg/metalake?rev=de416ed17b364afec61e1e4f8422e7391372a341#de416ed17b364afec61e1e4f8422e7391372a341"
+source = "git+https://github.com/metalakeorg/metalake?rev=7ad9ea8e99453fe8f0848405475c7e4720778911#7ad9ea8e99453fe8f0848405475c7e4720778911"
 dependencies = [
  "deadpool-postgres",
  "futures-util",
  "postgres-types",
+ "rustls 0.23.36",
+ "rustls-native-certs 0.8.1",
  "serde",
  "serde_json",
  "thiserror 2.0.20",
+ "tokio",
  "tokio-postgres",
+ "tokio-postgres-rustls 0.14.0",
  "uuid",
 ]
 
@@ -8697,7 +8706,7 @@ dependencies = [
  "indoc",
  "libc",
  "memoffset",
- "parking_lot 0.11.2",
+ "parking_lot 0.12.4",
  "portable-atomic",
  "pyo3-build-config",
  "pyo3-ffi",
@@ -11086,6 +11095,20 @@ dependencies = [
  "const-oid 0.9.6",
  "ring",
  "rustls 0.23.36",
+ "tokio",
+ "tokio-postgres",
+ "tokio-rustls 0.26.2",
+ "x509-cert",
+]
+
+[[package]]
+name = "tokio-postgres-rustls"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4c2ad44aa0ae96db89c4742212ed41645b2f597311ff6e1945542a4d9fadc2fb"
+dependencies = [
+ "rustls 0.23.36",
+ "sha2 0.11.0",
  "tokio",
  "tokio-postgres",
  "tokio-rustls 0.26.2",

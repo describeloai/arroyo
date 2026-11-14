@@ -90,7 +90,7 @@ aws-sdk-kinesis = { version = "1.95" }
 aws-config = { workspace = true }
 
 # MetaLake
-metalake-arroyo = { git = "https://github.com/metalakeorg/metalake", rev = "de416ed17b364afec61e1e4f8422e7391372a341" }
+metalake-arroyo = { git = "https://github.com/metalakeorg/metalake", rev = "7ad9ea8e99453fe8f0848405475c7e4720778911" }
 
 # Filesystem
 parquet = { workspace = true, features = ["async"] }

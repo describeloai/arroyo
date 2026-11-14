@@ -144,6 +144,7 @@ async fn test_metalake_names_resolved() {
     let env = Environment {
         postgres: url,
         schema,
+        auth: None,
         storage: vec![],
     };
     let query = "INSERT INTO shop.totals SELECT k, count(*) AS orders FROM shop.orders GROUP BY k";
